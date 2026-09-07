@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="funciones.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <div>
+            <img src="img/logoGotita.png" alt="Logotipo">
+            <h1>Distribuidora de Gas Gotita</h1>
+        </div>
+    </header>
+    <main>
+        <h2>Pide tus cilindros aqui</h2>
+        <section>
+            <form>
+                <div>
+                    <label for="cilindro-5">Cilindro 5 KG</label>
+                    <input type="number" id="cant-5" min="0" max="10" value="0">
+                </div>
+
+                <div>
+                    <label for="cilindro-11">Cilindro 11 KG</label>
+                    <input type="number" id="cilindro-11" min="0" max="10" value="0">
+                </div>
+
+                <div>
+                    <label for="cilindro-15">Cilindro 15 KG</label>
+                    <input type="number" id="cilindro-15" min="0" max="10" value="0">
+                </div>
+
+                <div>
+                    <label for="direccion">direccion</label>
+                    <input type="text" id="direccion" placeholder="homero 2060, san bernardo" required>
+                </div>
+
+                <div>
+                    <label for="indicaciones">Indicaciones Adicionales (Opcional)</label>
+                    <textarea id="indicaciones" rows="3"
+                        placeholder="Ej: Condominio xx esperar en la entrada.."></textarea>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+
+</html>

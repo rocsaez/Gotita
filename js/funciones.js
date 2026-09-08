@@ -3,10 +3,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   formularios.forEach((form) => {
     form.addEventListener("submit", (e) => {
+      // Detener el envío por defecto para manejar la validación con JS
+      e.preventDefault();
       limpiarErrores(form);
+
       let esValido = true;
 
-      // 1. Validar RUT (Formato Chileno básico)
+      // 1. Validar RUT (Login y Registro)
       const rutInput = form.querySelector("#rut");
       if (rutInput) {
         const rutLimpio = rutInput.value.replace(/[^0-9kK]/g, "");
@@ -45,18 +48,20 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // 6. Validar Pedido de Cilindros (Cliente.html)
-      const cant5 = document.getElementById("cant-5");
-      const cant11 = document.getElementById("cilindro-11");
-      const cant15 = document.getElementById("cilindro-15");
-      const direccion = document.getElementById("direccion");
+      const cant5 = form.querySelector("#cant-5");
+      const cant11 = form.querySelector("#cilindro-11");
+      const cant15 = form.querySelector("#cilindro-15");
+      const cant45 = form.querySelector("#cilindro-45");
+      const direccion = form.querySelector("#direccion");
 
       if (direccion) {
         const totalCilindros = (parseInt(cant5?.value) || 0) + 
                                (parseInt(cant11?.value) || 0) + 
-                               (parseInt(cant15?.value) || 0);
+                               (parseInt(cant15?.value) || 0) +
+                               (parseInt(cant45?.value) || 0);
 
-        if (totalCilindros === 0) {
-          mostrarError(cant5, "Debe seleccionar al menos un cilindro para pedir.");
+        if (totalCilindros <= 0) {
+          mostrarError(cant5 || form.querySelector(".grupo-form"), "Debe seleccionar al menos 1 cilindro para realizar el pedido.");
           esValido = false;
         }
 
@@ -66,11 +71,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
-      // Si hay algún campo inválido, se detiene el envío del formulario
-      if (!esValido) {
-        e.preventDefault();
-      } else {
-        alert("¡Formulario procesado con éxito!");
+      // Muestra el mensaje de éxito directamente en la pantalla (Sin alert)
+      if (esValido) {
+        mostrarExito(form, "¡Formulario procesado con éxito!");
       }
     });
   });
@@ -88,8 +91,17 @@ function mostrarError(element, mensaje) {
   }
 }
 
-// Función para limpiar errores previos al intentar reenviar
+// Función para renderizar el mensaje de éxito integrado en la vista
+function mostrarExito(form, mensaje) {
+  const exitoDiv = document.createElement("div");
+  exitoDiv.className = "mensaje-exito";
+  exitoDiv.innerText = mensaje;
+  form.prepend(exitoDiv);
+}
+
+// Función para limpiar errores y mensajes previos
 function limpiarErrores(form) {
   form.querySelectorAll(".input-error").forEach((el) => el.classList.remove("input-error"));
   form.querySelectorAll(".mensaje-error").forEach((el) => el.remove());
+  form.querySelectorAll(".mensaje-exito").forEach((el) => el.remove());
 }

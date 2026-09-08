@@ -28,8 +28,8 @@
                     </select>
                 </div>
 
-                <h3>Cilindros de Gas</h3>
-                <section>
+                <fieldset>
+                    <legend>Cilindros de Gas</legend>
                     <div>
                         <label for="cilindro-5">Cilindro 5 KG</label>
                         <input type="number" id="cilindro-5" min="0" max="10" value="0">
@@ -49,9 +49,10 @@
                         <label for="cilindro-45">Cilindro 45 KG</label>
                         <input type="number" id="cilindro-45" min="0" max="10" value="0">
                     </div>
-                </section>
-                <section>
-                    <h3>Reguladores</h3>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Reguladores</legend>
                     <div>
                         <label for="regulador-estandar">Regulador doméstico estándar</label>
                         <input type="number" id="regulador-estandar" min="0" max="10" value="0">
@@ -66,9 +67,10 @@
                         <label for="regulador-dual">Regulador dual (2 salidas)</label>
                         <input type="number" id="regulador-dual" min="0" max="10" value="0">
                     </div>
-                </section>
-                <section>
-                    <h3>Mangueras y Conexiones</h3>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Mangueras y Conexiones</legend>
                     <div>
                         <label for="manguera-15">Manguera de gas 1.5 m</label>
                         <input type="number" id="manguera-15" min="0" max="10" value="0">
@@ -88,9 +90,10 @@
                         <label for="kit-conexion">Kit conexión completo</label>
                         <input type="number" id="kit-conexion" min="0" max="10" value="0">
                     </div>
-                </section>
-                <section>
-                    <h3>Accesorios</h3>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Accesorios</legend>
                     <div>
                         <label for="carro-porta">Carro porta cilindro 11/15 kg</label>
                         <input type="number" id="carro-porta" min="0" max="5" value="0">
@@ -105,12 +108,13 @@
                         <label for="detector-gas">Detector de gas a batería</label>
                         <input type="number" id="detector-gas" min="0" max="5" value="0">
                     </div>
-                </section>
-                <section>
-                    <h3>Datos de Despacho</h3>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Datos de Despacho</legend>
                     <div>
                         <label for="direccion">Dirección</label>
-                        <input type="text" id="direccion" placeholder="homero 2060, san bernardo" required>
+                        <input type="text" id="direccion" placeholder="Ej: Av. Siempre Viva 123, Chillán" required>
                     </div>
 
                     <div>
@@ -120,13 +124,16 @@
                     </div>
 
                     <div>
-                        <h3>Total Pedido: <span id="total-pedido">$0</span></h3>
+                        <p>Total Pedido: <strong id="total-pedido">$0</strong></p>
                     </div>
-                </section>
+                </fieldset>
 
                 <button type="submit">Confirmar Pedido</button>
             </form>
         </section>
+        <nav>
+            <a href="Inicio.html">Volver al inicio</a>
+        </nav>
     </main>
     <footer>
         <div>

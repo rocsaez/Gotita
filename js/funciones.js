@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
     totalElemento.textContent = totalFormateado;
   }
 
-  // Asignar listeners para el cálculo en tiempo real
+  // Listeners para el cálculo en tiempo real
   const elementosEscucha = [
     document.getElementById("tipo-cliente"),
     ...Array.from(document.querySelectorAll('input[type="number"]')),
@@ -92,11 +92,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       let esValido = true;
 
-      // RUT
+      // RUT (Validación de formato mediante Expresión Regular)
       const rutInput = form.querySelector("#rut");
       if (rutInput) {
-        const rutLimpio = rutInput.value.replace(/[^0-9kK]/g, "");
-        if (rutLimpio.length < 8 || rutLimpio.length > 9) {
+        const rutValor = rutInput.value.trim();
+        // Permite formatos: 12345678-9, 12.345.678-9, 12345678K, etc.
+        const regExRut = /^(\d{1,2}\.?\d{3}\.?\d{3}\-?[\dkK])$/;
+        
+        if (!regExRut.test(rutValor) || rutValor.length < 8) {
           mostrarError(rutInput, "Ingrese un RUT válido (ej: 12345678-9).");
           esValido = false;
         }
@@ -155,14 +158,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
+      // Mensaje de éxito según la vista
       if (esValido) {
-        mostrarExito(form, "¡Pedido procesado con éxito!");
+        if (direccion && inputsCantidad.length > 0) {
+          mostrarExito(form, "¡Pedido procesado con éxito!");
+        } else if (nombreInput) {
+          mostrarExito(form, "¡Registro completado con éxito!");
+        } else {
+          mostrarExito(form, "¡Inicio de sesión exitoso!");
+        }
       }
     });
   });
 });
 
 // --- 3. FUNCIONES AUXILIARES DE INTERFAZ ---
+
 function mostrarError(element, mensaje) {
   element.classList.add("input-error");
   const errorDiv = document.createElement("span");

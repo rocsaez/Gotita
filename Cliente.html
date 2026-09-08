@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cliente</title>
-   <link rel="stylesheet" href="css/style.css">
+    <title>Cliente - Gas Gotita</title>
+    <link rel="stylesheet" href="css/style.css">
     <script src="js/funciones.js" defer></script>
 </head>
 
@@ -17,39 +17,112 @@
         </div>
     </header>
     <main>
-        <h2>Pide tus cilindros aqui</h2>
+        <h2>Pide tus productos aquí</h2>
         <section>
             <form>
                 <div>
-                    <label for="cilindro-5">Cilindro 5 KG</label>
-                    <input type="number" id="cilindro-5" min="0" max="10" value="0">
+                    <label for="tipo-cliente">Tipo de Cliente / Tarifa</label>
+                    <select id="tipo-cliente">
+                        <option value="residencial">Residencial (Hogar)</option>
+                        <option value="comercial">Comercial (Negocio)</option>
+                    </select>
                 </div>
 
-                <div>
-                    <label for="cilindro-11">Cilindro 11 KG</label>
-                    <input type="number" id="cilindro-11" min="0" max="10" value="0">
-                </div>
+                <h3>Cilindros de Gas</h3>
+                <section>
+                    <div>
+                        <label for="cilindro-5">Cilindro 5 KG</label>
+                        <input type="number" id="cilindro-5" min="0" max="10" value="0">
+                    </div>
 
-                <div>
-                    <label for="cilindro-15">Cilindro 15 KG</label>
-                    <input type="number" id="cilindro-15" min="0" max="10" value="0">
-                </div>
+                    <div>
+                        <label for="cilindro-11">Cilindro 11 KG</label>
+                        <input type="number" id="cilindro-11" min="0" max="10" value="0">
+                    </div>
 
-                <div>
-                    <label for="cilindro-45">Cilindro 45 KG</label>
-                    <input type="number" id="cilindro-45" min="0" max="10" value="0">
-                </div>
+                    <div>
+                        <label for="cilindro-15">Cilindro 15 KG</label>
+                        <input type="number" id="cilindro-15" min="0" max="10" value="0">
+                    </div>
 
-                <div>
-                    <label for="direccion">direccion</label>
-                    <input type="text" id="direccion" placeholder="homero 2060, san bernardo" required>
-                </div>
+                    <div>
+                        <label for="cilindro-45">Cilindro 45 KG</label>
+                        <input type="number" id="cilindro-45" min="0" max="10" value="0">
+                    </div>
+                </section>
+                <section>
+                    <h3>Reguladores</h3>
+                    <div>
+                        <label for="regulador-estandar">Regulador doméstico estándar</label>
+                        <input type="number" id="regulador-estandar" min="0" max="10" value="0">
+                    </div>
 
-                <div>
-                    <label for="indicaciones">Indicaciones Adicionales (Opcional)</label>
-                    <textarea id="indicaciones" rows="3"
-                        placeholder="Ej: Condominio xx esperar en la entrada.."></textarea>
-                </div>
+                    <div>
+                        <label for="regulador-alta">Regulador de alta presión</label>
+                        <input type="number" id="regulador-alta" min="0" max="10" value="0">
+                    </div>
+
+                    <div>
+                        <label for="regulador-dual">Regulador dual (2 salidas)</label>
+                        <input type="number" id="regulador-dual" min="0" max="10" value="0">
+                    </div>
+                </section>
+                <section>
+                    <h3>Mangueras y Conexiones</h3>
+                    <div>
+                        <label for="manguera-15">Manguera de gas 1.5 m</label>
+                        <input type="number" id="manguera-15" min="0" max="10" value="0">
+                    </div>
+
+                    <div>
+                        <label for="manguera-3">Manguera de gas 3 m</label>
+                        <input type="number" id="manguera-3" min="0" max="10" value="0">
+                    </div>
+
+                    <div>
+                        <label for="abrazadera">Abrazadera metálica</label>
+                        <input type="number" id="abrazadera" min="0" max="20" value="0">
+                    </div>
+
+                    <div>
+                        <label for="kit-conexion">Kit conexión completo</label>
+                        <input type="number" id="kit-conexion" min="0" max="10" value="0">
+                    </div>
+                </section>
+                <section>
+                    <h3>Accesorios</h3>
+                    <div>
+                        <label for="carro-porta">Carro porta cilindro 11/15 kg</label>
+                        <input type="number" id="carro-porta" min="0" max="5" value="0">
+                    </div>
+
+                    <div>
+                        <label for="tapa-valvula">Tapa protectora para válvula</label>
+                        <input type="number" id="tapa-valvula" min="0" max="10" value="0">
+                    </div>
+
+                    <div>
+                        <label for="detector-gas">Detector de gas a batería</label>
+                        <input type="number" id="detector-gas" min="0" max="5" value="0">
+                    </div>
+                </section>
+                <section>
+                    <h3>Datos de Despacho</h3>
+                    <div>
+                        <label for="direccion">Dirección</label>
+                        <input type="text" id="direccion" placeholder="homero 2060, san bernardo" required>
+                    </div>
+
+                    <div>
+                        <label for="indicaciones">Indicaciones Adicionales (Opcional)</label>
+                        <textarea id="indicaciones" rows="3"
+                            placeholder="Ej: Condominio xx esperar en la entrada.."></textarea>
+                    </div>
+
+                    <div>
+                        <h3>Total Pedido: <span id="total-pedido">$0</span></h3>
+                    </div>
+                </section>
 
                 <button type="submit">Confirmar Pedido</button>
             </form>

@@ -1,81 +1,95 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const formulario = document.getElementById('form-pedido');
-    const inputTelefono = document.getElementById('telefono');
-    const selectProducto = document.getElementById('producto');
-    const selectTipoCliente = document.getElementById('tipo-cliente');
-    const spanPrecioTotal = document.getElementById('precio-total');
+document.addEventListener("DOMContentLoaded", () => {
+  const formularios = document.querySelectorAll("form");
 
-    // Diccionario de precios sacado de tu Excel
-    const catalogoPrecios = {
-        '5kg': { residencial: 6500, comercial: 6000 },
-        '11kg': { residencial: 12000, comercial: 11000 },
-        '15kg': { residencial: 16000, comercial: 14500 },
-        '45kg': { residencial: 45000, comercial: 40000 }
-    };
+  formularios.forEach((form) => {
+    form.addEventListener("submit", (e) => {
+      limpiarErrores(form);
+      let esValido = true;
 
-    // 1. Sugerencia de precio en tiempo real (Mejora la UX)
-    const actualizarPrecio = () => {
-        const producto = selectProducto.value;
-        const tipo = selectTipoCliente.value;
-        
-        if (producto && tipo && catalogoPrecios[producto]) {
-            const precio = catalogoPrecios[producto][tipo];
-            spanPrecioTotal.textContent = `$${precio} CLP`;
-        } else {
-            spanPrecioTotal.textContent = '$0 CLP';
+      // 1. Validar RUT (Formato Chileno básico)
+      const rutInput = form.querySelector("#rut");
+      if (rutInput) {
+        const rutLimpio = rutInput.value.replace(/[^0-9kK]/g, "");
+        if (rutLimpio.length < 8 || rutLimpio.length > 9) {
+          mostrarError(rutInput, "Ingrese un RUT válido (ej: 12345678-9).");
+          esValido = false;
         }
-    };
+      }
 
-    selectProducto.addEventListener('change', actualizarPrecio);
-    selectTipoCliente.addEventListener('change', actualizarPrecio);
+      // 2. Validar Contraseña
+      const passInput = form.querySelector("#contrasena");
+      if (passInput && passInput.value.trim().length < 6) {
+        mostrarError(passInput, "La contraseña debe tener al menos 6 caracteres.");
+        esValido = false;
+      }
 
-    // 2. Validaciones personalizadas al enviar el formulario
-    formulario.addEventListener('submit', (event) => {
-        event.preventDefault(); // Evita que se recargue la página
-        let esValido = true;
+      // 3. Validar Correo Electrónico
+      const correoInput = form.querySelector("#correo");
+      if (correoInput && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correoInput.value.trim())) {
+        mostrarError(correoInput, "Ingrese un correo electrónico válido.");
+        esValido = false;
+      }
 
-        // Limpiar errores previos
-        document.querySelectorAll('.error-msg').forEach(msg => msg.style.display = 'none');
-        document.querySelectorAll('input, select').forEach(input => input.classList.remove('input-error'));
+      // 4. Validar Teléfono (Formato Chileno de 9 dígitos)
+      const telInput = form.querySelector("#telefono");
+      if (telInput && !/^[0-9]{9}$/.test(telInput.value.trim())) {
+        mostrarError(telInput, "El teléfono debe tener exactamente 9 dígitos.");
+        esValido = false;
+      }
 
-        // Validar Dirección
-        const direccion = document.getElementById('direccion');
+      // 5. Validar Nombre
+      const nombreInput = form.querySelector("#nombre");
+      if (nombreInput && nombreInput.value.trim().length < 2) {
+        mostrarError(nombreInput, "Ingrese su nombre completo.");
+        esValido = false;
+      }
+
+      // 6. Validar Pedido de Cilindros (Cliente.html)
+      const cant5 = document.getElementById("cant-5");
+      const cant11 = document.getElementById("cilindro-11");
+      const cant15 = document.getElementById("cilindro-15");
+      const direccion = document.getElementById("direccion");
+
+      if (direccion) {
+        const totalCilindros = (parseInt(cant5?.value) || 0) + 
+                               (parseInt(cant11?.value) || 0) + 
+                               (parseInt(cant15?.value) || 0);
+
+        if (totalCilindros === 0) {
+          mostrarError(cant5, "Debe seleccionar al menos un cilindro para pedir.");
+          esValido = false;
+        }
+
         if (direccion.value.trim().length < 5) {
-            mostrarError('error-direccion', 'Por favor, ingresa una dirección válida y detallada.');
-            direccion.classList.add('input-error');
-            esValido = false;
+          mostrarError(direccion, "Ingrese una dirección de entrega válida.");
+          esValido = false;
         }
+      }
 
-        // Validar Teléfono (Solo 9 números)
-        const regexTelefono = /^[0-9]{9}$/;
-        if (!regexTelefono.test(inputTelefono.value)) {
-            mostrarError('error-telefono', 'El teléfono debe contener exactamente 9 dígitos numéricos.');
-            inputTelefono.classList.add('input-error');
-            esValido = false;
-        }
-
-        // Validar Zona de Despacho
-        const selectZona = document.getElementById('zona');
-        if (selectZona.value === '') {
-            mostrarError('error-zona', 'Debes seleccionar una zona de despacho.');
-            selectZona.classList.add('input-error');
-            esValido = false;
-        }
-
-        if (esValido) {
-            alert('¡Pedido validado correctamente! Listo para procesar.');
-            // Aquí iría el código para enviar los datos al backend más adelante
-            formulario.reset();
-            spanPrecioTotal.textContent = '$0 CLP';
-        }
+      // Si hay algún campo inválido, se detiene el envío del formulario
+      if (!esValido) {
+        e.preventDefault();
+      } else {
+        alert("¡Formulario procesado con éxito!");
+      }
     });
-
-    // Función auxiliar para mostrar errores
-    function mostrarError(idElemento, mensaje) {
-        const elementoError = document.getElementById(idElemento);
-        if (elementoError) {
-            elementoError.textContent = mensaje;
-            elementoError.style.display = 'block';
-        }
-    }
+  });
 });
+
+// Función para renderizar el mensaje de error contextual en el HTML
+function mostrarError(element, mensaje) {
+  element.classList.add("input-error");
+  const errorDiv = document.createElement("span");
+  errorDiv.className = "mensaje-error";
+  errorDiv.innerText = mensaje;
+  
+  if (element.parentNode) {
+    element.parentNode.appendChild(errorDiv);
+  }
+}
+
+// Función para limpiar errores previos al intentar reenviar
+function limpiarErrores(form) {
+  form.querySelectorAll(".input-error").forEach((el) => el.classList.remove("input-error"));
+  form.querySelectorAll(".mensaje-error").forEach((el) => el.remove());
+}

@@ -1,80 +1,241 @@
 /* ==========================================
-   7. FORMULARIOS (LOGIN Y REGISTRO)
+   1. VARIABLES & RESET BASE
    ========================================== */
-.contenedor-form {
-    max-width: 500px;
-    margin: 0 auto;
-    background: #ffffff;
-    padding: 2.5rem;
-    border-radius: 8px;
-    border: 1px solid #e5e5e5;
-    border-top: 5px solid #000000;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+:root {
+  --primary-color: #000000;
+  --primary-hover: #333333;
+  --secondary-color: #f39c12;
+  --bg-color: #f4f6f9;
+  --card-bg: #ffffff;
+  --text-color: #121212;
+  --border-color: #e5e5e5;
+  --input-border: #cccccc;
+  --error-color: #dc3545;
+  --error-bg: #fff8f8;
+  --success-color: #2ecc71;
+  --border-radius: 8px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ==========================================
+   2. ENCABEZADO Y NAVEGACIÓN
+   ========================================== */
+header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header div, header .presentacion {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+header img, .logo {
+  height: 50px;
+  width: auto;
+  border-radius: 50%;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+nav a:hover {
+  background-color: var(--primary-hover);
+}
+
+/* ==========================================
+   3. SECCIONES Y TARJETAS (Inicio y Tienda)
+   ========================================== */
+.nosotros, .productos, section {
+  background: var(--card-bg);
+  padding: 25px;
+  margin-bottom: 25px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+h1, h2, h3 {
+  margin-bottom: 15px;
+  color: var(--primary-color);
+}
+
+.cilindros {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.cilindros img {
+  width: 80px;
+  height: auto;
+  object-fit: contain;
+}
+
+.pasosRegistro {
+  background-color: #f8f9fa;
+  border-left: 4px solid var(--primary-color);
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+/* ==========================================
+   4. FORMULARIOS (LOGIN, REGISTRO Y CLIENTE)
+   ========================================== */
+.contenedor-form, form {
+  max-width: 500px;
+  margin: 0 auto;
+  background: var(--card-bg);
+  padding: 2.5rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  border-top: 5px solid var(--primary-color);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
 }
 
 .contenedor-form h2 {
-    border-bottom: none;
-    text-align: center;
-    margin-bottom: 2rem;
+  border-bottom: none;
+  text-align: center;
+  margin-bottom: 2rem;
 }
 
-.grupo-form {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1.2rem;
+.grupo-form, form div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.2rem;
+  gap: 0.5rem;
 }
 
-.grupo-form label {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: #121212;
+label {
+  font-weight: 600;
+  color: var(--text-color);
 }
 
-.grupo-form input,
-.grupo-form select {
-    padding: 0.75rem;
-    border: 1px solid #cccccc;
-    border-radius: 4px;
-    font-size: 1rem;
-    font-family: inherit;
-    transition: border-color 0.3s;
+input, textarea, select {
+  padding: 0.75rem;
+  border: 1px solid var(--input-border);
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.grupo-form input:focus,
-.grupo-form select:focus {
-    outline: none;
-    border-color: #000000;
-    box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
-/* Clases dinámicas para JavaScript (Errores) */
+/* Botones de Envío */
+.btn-submit, button[type="submit"], button {
+  width: 100%;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border: none;
+  padding: 0.85rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s;
+}
+
+.btn-submit:hover, button[type="submit"]:hover, button:hover {
+  background-color: var(--primary-hover);
+}
+
+/* ==========================================
+   5. CLASES DINÁMICAS JAVASCRIPT (ERRORES)
+   ========================================== */
 .input-error {
-    border-color: #dc3545 !important;
-    background-color: #fff8f8;
+  border-color: var(--error-color) !important;
+  background-color: var(--error-bg);
 }
 
-.msg-error {
-    color: #dc3545;
-    font-size: 0.85rem;
-    font-weight: 500;
-    margin-top: 0.4rem;
-    display: none; /* Oculto por defecto, JS lo muestra */
+.mensaje-error, .msg-error {
+  color: var(--error-color);
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-top: 0.4rem;
 }
 
-.btn-submit {
+/* ==========================================
+   6. FOOTER Y RESPONSIVE DESIGN (Media Queries)
+   ========================================== */
+footer {
+  background-color: #222222;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: auto;
+}
+
+/* Teléfono Móvil (≥ 360px) y Tabletas */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+
+  nav ul {
+    flex-direction: column;
     width: 100%;
-    background-color: #000000;
-    color: #ffffff;
-    border: none;
-    padding: 0.85rem;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 1rem;
-    transition: background-color 0.3s;
-}
+  }
 
-.btn-submit:hover {
-    background-color: #333333;
+  .cilindros {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .contenedor-form, form {
+    padding: 1.5rem;
+  }
 }
